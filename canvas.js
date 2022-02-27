@@ -3,6 +3,43 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let content = canvas.getContext('2d');
+
+
+
+let step = 5; // step size per frame refresh, related to speed, higher no.=faster;
+let radius = 30;
+let y = -radius;
+let cols = ['rgb(255,0,0,0.6)', 'rgb(255,60,0,0.6)', 'rgb(255,255,0,0.6)', 'rgb(0,255,125,0.6)', 'rgb(0,125,255,0.6)'];
+let colChoice = 0;
+
+function animate() {
+  requestAnimationFrame(animate);
+// single shot to include in next refresh;
+
+content.clearRect(0,0,innerWidth,innerHeight);
+// draw circle;
+content.beginPath();
+content.arc(200,y,30,0,Math.PI*2, false);
+content.strokeStyle = "green";
+content.fillStyle = cols[colChoice];
+//content.stroke();
+content.fill();
+
+if ( y > canvas.height + radius) {y = -radius; colChoice = ++colChoice%(cols.length); } 
+
+
+// move y coordinate next for next draw;
+y += step;
+
+
+}
+
+animate();
+
+
+
+/*
+let content = canvas.getContext('2d');
 // content.fillRect(x,y,width,height);
 content.fillStyle = 'rgb(255,0,0,0.3)';
 content.fillRect(100, 100, 100, 100);
@@ -41,3 +78,4 @@ for (let i=0; i<255; i++) {
   content.strokeStyle = `rgba(${r},${g},${b},1)`;
   content.stroke();
 } // next i;
+*/
