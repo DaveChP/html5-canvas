@@ -5,13 +5,29 @@ canvas.height = window.innerHeight;
 let content = canvas.getContext('2d');
 let play = true;
 
-window.addEventListener('click', () => {play = !play; animate()})
+window.addEventListener('mousedown', (event) => {
+  play = !play; 
+  animate();
+  console.log(`mouse x: ${event.offsetX}, mouse y: ${event.offsetY}`);
+  console.log(`circle centre-x: ${x}, circle centre-y: ${y}`);
+  let distX = x-event.offsetX;
+  let distY = y-event.offsetY;
+  let sqX = distX**2;
+  let sqY = distY**2;
+  let sumOfSquares = sqX + sqY;
+  distanceMouseToCircleCenter = Math.sqrt(sumOfSquares);
+
+  console.log(`distance: ${distanceMouseToCircleCenter}px`);
+ 
+
+})
 
 
 let step = 5; // step size per frame refresh, related to speed, higher no.=faster;
 let radius = 30;
+let x = 120;
 let y = -radius;
-let cols = ['rgb(255,0,0,0.6)', 'rgb(255,60,0,0.6)', 'rgb(255,255,0,0.6)', 'rgb(0,255,125,0.6)', 'rgb(0,125,255,0.6)'];
+let cols = ['rgb(255,0,0,0.8)', 'rgb(255,125,0,0.8)', 'rgb(255,255,0,0.8)', 'rgb(0,255,0,0.6)', 'rgb(0,0,255,0.8)', 'rgb(75,0,125,0.8)', 'rgb(148,0,255,0.8)'];
 let colChoice = 0;
 
 function animate() {
@@ -31,7 +47,7 @@ content.stroke();
 
 // draw circle;
 content.beginPath();
-content.arc(200,y,30,0,Math.PI*2, false);
+content.arc(x,y,30,0,Math.PI*2, false);
 content.strokeStyle = "green";
 content.fillStyle = cols[colChoice];
 //content.stroke();
