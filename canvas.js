@@ -3,7 +3,9 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let content = canvas.getContext('2d');
+let play = true;
 
+window.addEventListener('click', () => {play = !play; animate()})
 
 
 let step = 5; // step size per frame refresh, related to speed, higher no.=faster;
@@ -13,10 +15,20 @@ let cols = ['rgb(255,0,0,0.6)', 'rgb(255,60,0,0.6)', 'rgb(255,255,0,0.6)', 'rgb(
 let colChoice = 0;
 
 function animate() {
+
+ if (play) {
   requestAnimationFrame(animate);
 // single shot to include in next refresh;
+  } // toggle on-off by toggling play true/false with click;
 
 content.clearRect(0,0,innerWidth,innerHeight);
+// origin circle
+content.beginPath();
+content.arc(0,0,30,0,Math.PI*2, false);
+content.strokeStyle = "green";
+content.stroke();
+// demonstrates, xy coordinates define centre of arc;
+
 // draw circle;
 content.beginPath();
 content.arc(200,y,30,0,Math.PI*2, false);
