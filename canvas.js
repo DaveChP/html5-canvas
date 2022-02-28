@@ -1,12 +1,12 @@
 var canvas = document.querySelector('canvas');
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.height = 0.9*window.innerHeight;
 
 let content = canvas.getContext('2d');
 let play = true;
 
 window.addEventListener('mousedown', (event) => {
-  play = !play; 
+  play = !play; // toggle play true/false;
   animate();
   console.log(`mouse x: ${event.offsetX}, mouse y: ${event.offsetY}`);
   console.log(`circle centre-x: ${x}, circle centre-y: ${y}`);
@@ -16,14 +16,23 @@ window.addEventListener('mousedown', (event) => {
   let sqY = distY**2;
   let sumOfSquares = sqX + sqY;
   distanceMouseToCircleCenter = Math.sqrt(sumOfSquares);
-
   console.log(`distance: ${distanceMouseToCircleCenter}px`);
- 
+  
+  if (distanceMouseToCircleCenter < radius) {resetY()}
+  else if (distX > 0) {x += radius*2} else {x -= radius*2};
 
-})
+  play = !play;
+
+ })
+
+function resetY() {
+  y = -radius; 
+  colChoice = ++colChoice%(cols.length);
+  x = (Math.random()*(canvas.width-2*radius)) + radius; 
+}
 
 
-let step = 5; // step size per frame refresh, related to speed, higher no.=faster;
+let step = 3; // step size per frame refresh, related to speed, higher no.=faster;
 let radius = 30;
 let x = 120;
 let y = -radius;
@@ -38,12 +47,18 @@ function animate() {
   } // toggle on-off by toggling play true/false with click;
 
 content.clearRect(0,0,innerWidth,innerHeight);
-// origin circle
+
+/*
+//  circle to check bounds
 content.beginPath();
-content.arc(0,0,30,0,Math.PI*2, false);
+// Math.random() 0-1, trying at 0 and 1 here, assesses formula used below to reset x;
+let fixedX = 1*(canvas.width-2*radius) + radius;
+content.arc(fixedX,0,30,0,Math.PI*2, false);
 content.strokeStyle = "green";
 content.stroke();
 // demonstrates, xy coordinates define centre of arc;
+// and confirms bounding values of x;
+*/
 
 // draw circle;
 content.beginPath();
@@ -53,7 +68,7 @@ content.fillStyle = cols[colChoice];
 //content.stroke();
 content.fill();
 
-if ( y > canvas.height + radius) {y = -radius; colChoice = ++colChoice%(cols.length); } 
+if ( y > canvas.height + radius) {resetY();} 
 
 
 // move y coordinate next for next draw;
