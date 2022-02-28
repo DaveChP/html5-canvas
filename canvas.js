@@ -10,12 +10,12 @@ window.addEventListener('mousedown', (event) => {
   animate();
   console.log(`mouse x: ${event.offsetX}, mouse y: ${event.offsetY}`);
   console.log(`circle centre-x: ${x}, circle centre-y: ${y}`);
-  let distX = x-event.offsetX;
-  let distY = y-event.offsetY;
+  let distX = parseInt(x-event.offsetX);
+  let distY = parseInt(y-event.offsetY);
   let sqX = distX**2;
   let sqY = distY**2;
   let sumOfSquares = sqX + sqY;
-  distanceMouseToCircleCenter = Math.sqrt(sumOfSquares);
+  distanceMouseToCircleCenter = parseInt(Math.sqrt(sumOfSquares));
   console.log(`distance: ${distanceMouseToCircleCenter}px`);
   
   if (distanceMouseToCircleCenter < radius) {resetY()}
