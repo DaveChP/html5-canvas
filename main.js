@@ -3,6 +3,22 @@ const context = canvas.getContext('2d');
 canvas.width = innerWidth; // window property;
 canvas.height = innerHeight;
 
+document.addEventListener('click', event => {if (event.target.tagName=='CANVAS'){save()};} );
+let loop = 0;
+
+function save(){
+loop++;
+console.log(`save triggered ${loop}`);
+
+const aTag = document.createElement('a');
+document.body.appendChild(aTag);
+aTag.href = canvas.toDataURL();
+aTag.download = `magic-image-${loop}.png`;
+aTag.click();
+aTag.remove();
+}
+
+
 const players = { 
   player1: [20,20,50,50,"green"],
   player2: [80,50,20,20,"red"],
@@ -32,10 +48,6 @@ class Player {
 
 } // end class;
 
-/*
-const player1 = new Player(...players[0]);
-const player2 = new Player(...players[1]);
-*/
 
 function randomColor() {
 let opacity = Math.random()*0.7 + 0.1;
@@ -60,6 +72,8 @@ return rgbColors[(parseInt(Math.random()*rgbColors.length))];
 
 const colors = ["red", "blue", "green", "orange", "yellow", "indigo", "violet", "lime", "deeppink", "teal", "aquamarine"];
 
+function makeArt() {
+
 for (let i=0; i<300; i++) {
   let maxWidth = 120;
   let minWidth = 20;
@@ -68,9 +82,12 @@ for (let i=0; i<300; i++) {
 
   let player = new Player(Math.random()*(canvas.width-maxWidth), Math.random()*(canvas.height-maxHeight), Math.random()*(maxWidth-minWidth)+minWidth, Math.random()*(maxHeight-minHeight)+minHeight,randomColor());
   player.draw();
-}
+} // next rectangle;
+} // end function makeArt();
 
 
+
+/*
   for (keyName in players) {
    // use window[variableReference] to adopt keyName as new player name;
    window[keyName] = new Player(...players[keyName]);
@@ -82,3 +99,6 @@ player2.draw();
 player3.draw();
 
 player1.update();
+*/
+
+makeArt();
